@@ -68,9 +68,18 @@ const categoryCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
-    delete : (req,res)=>{
+    delete : async (req,res)=>{
         try{
-            let id 
+            let id = req.params.id
+
+            let extuser = await category.findById({_id:id})
+
+            if(!extuser)
+            return res.json({msg:"user not found"})
+
+            let deleted = await category.findByIdAndDelete({_id:id})
+
+            res.json({msg :`${extuser.title} deleted successfully`})
 
             res.json({msg:'delete called'})
 
