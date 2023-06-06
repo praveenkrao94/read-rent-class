@@ -24,6 +24,7 @@ app.use(cookieparser(process.env.SECRET_TOKEN))  //When a client (such as a web 
 //In backend programming, cookies are small pieces of data that are stored on the user's computer by the web server. Cookies are primarily used to track and maintain information about the user's interaction with a website. They enable the server to remember certain user-specific details and provide personalized experiences.
 
 app.use('/api/v1/auth', require('./Route/authRoute'))
+app.use('/api/category', require('./Route/categoryRoute'))
 
 app.all('**', async (req, res) => {
     return res.status(404).json({ msg: `Requested path not Found` })
