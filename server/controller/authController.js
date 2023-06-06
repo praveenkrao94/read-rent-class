@@ -114,7 +114,7 @@ const authContoller = {
             if (!cToken)
                 return res.status(404).json({ msg: "token not Found , Session Expired" })
 
-                // verify login token 
+                // verify login token  //
 
                 jwt.verify(cToken,process.env.SECRET_TOKEN,(err,user)=>{
                     if(err)
