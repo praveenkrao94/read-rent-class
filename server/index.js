@@ -25,6 +25,7 @@ app.use(cookieparser(process.env.SECRET_TOKEN))  //When a client (such as a web 
 
 app.use('/api/v1/auth', require('./Route/authRoute'))
 app.use('/api/category', require('./Route/categoryRoute'))
+app.use('/api/book' , require('./Route/bookRoute'))
 
 app.all('**', async (req, res) => {
     return res.status(404).json({ msg: `Requested path not Found` })

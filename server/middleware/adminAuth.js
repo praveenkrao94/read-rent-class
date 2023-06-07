@@ -5,7 +5,7 @@ const adminAuth = async (req,res,next)=>{
     try{
         const id = req.user.id
     
-        const extuser = await User({_id:id})
+        const extuser = await User.findById({_id:id})
     
         if(!extuser)
     
