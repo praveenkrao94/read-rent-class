@@ -25,7 +25,7 @@ returndate:{
 },
 paymentStatus:{
     type:String,
-    enum:["paid", "unpaid"]
+    enum:["paid", "unpaid"],
     default:"unpaid"
 }
 },{
