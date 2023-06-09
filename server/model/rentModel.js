@@ -17,7 +17,7 @@ amount:{
 },
 rentdate:{
     type:Date,
-    default: new Date().toLocaleString
+    default: new Date().toLocaleString()
 },
 returndate:{
     type:Date,
