@@ -24,6 +24,7 @@ export default function Login() {
                 toast.success(res.data.msg)
                 localStorage.setItem("loginStatus" , true)
                 navigate('/')
+                window.location.href ='/';
             }).catch((err)=>{
                 toast.error(err.response.data.msg)
             })

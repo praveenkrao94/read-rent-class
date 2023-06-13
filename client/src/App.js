@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {BrowserRouter , Route , NavLink , Routes} from 'react-router-dom'
 import {ToastContainer} from 'react-toastify'
 
@@ -16,23 +16,47 @@ import Register from './components/Auth/Register';
 import UserDashboard from './components/User/UserDashboard';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import Pnf from './components/Util/Pnf';
+import { GlobalContext } from './GlobalContext';
+import ProtectedRoute from './AuthGuard/ProtectedRoute';
+import Header from './components/Util/Header';
+import Footer from './components/Util/Footer';
 
 
 
 export default function App() {
+const context = useContext(GlobalContext)
+const[isLogged] = context.auth.isLogged
+const[isUser] = context.auth.isUser
+const[isAdmin] = context.auth.isAdmin
+  
   return (
     <BrowserRouter>
+    <Header/>
       <Menu/>
     <ToastContainer position={'top-center'} autoClose={4000}/>
     <Routes>
       <Route path={'/'} element = {<Home/>}/>
       <Route path={'/contact'} element = {<Contact/>}/>
       <Route path={'/login'} element = {<Login/>}/>
-      <Route path={'/regsiter'} element = {<Register/>}/>
-      <Route path={'/user/dashboard'} element = {<UserDashboard/>}/>
-      <Route path={'/admin/dashboard'} element = {<AdminDashboard/>}/>
+      <Route path={'/register'} element = {<Register/>}/>
+{
+  isLogged && isUser ?(
+  <Route element = {<ProtectedRoute/>}>
+    <Route path={'/user/dashboard'} element = {<UserDashboard/>}/>
+  </Route>
+  ):null
+},
+{ isLogged && isAdmin ?(
+
+  <Route element = {<ProtectedRoute/>} >
+    <Route path={'/admin/dashboard'} element = {<AdminDashboard/>}/>
+  </Route>
+):null
+},
+   
       <Route path={'/*'} element = {<Pnf/>}/>
     </Routes>
+      <Footer/>
     </BrowserRouter>
   )
 }
