@@ -19,7 +19,7 @@ const Bookctrl = {
                 if(!extuser)
                 return res.status(404).json({msg : "Id not Found"})
 
-                res.json({extuser})
+                res.json({book:extuser})
                 
             }
             catch (err){
