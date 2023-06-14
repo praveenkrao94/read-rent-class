@@ -49,7 +49,7 @@ const readBooks = async ()=>{
                             <thead className='text-center' >
                                 <tr>
                                     <th colSpan={6}>
-                                        <NavLink to={'/admin/book/add'} className='btn btn-success flaot-end' >Add New Book</NavLink>
+                                        <NavLink to={'/admin/book/add'} className='btn btn-success float-end' >Add New Book</NavLink>
                                     </th>
                                 </tr>
                                 <tr >
