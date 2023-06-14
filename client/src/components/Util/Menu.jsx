@@ -50,14 +50,39 @@ const navigate = useNavigate()
           <ul className='dropdown-menu text-center'>
             <li>
               {
-                isUser ? <NavLink to={'/user/dashboard'} className='dropdown-item' >User Dashboard</NavLink> :null
-              }
-              {
-                isAdmin ? <NavLink to={'/admin/dashboard'} className='dropdown-item' >Admin Dashboard</NavLink> :null
+                isUser ? (
+                  <React.Fragment>
+                    <li>
+                    <NavLink to={'/user/dashboard'} className='dropdown-item' >User Dashboard</NavLink>
+                    </li>
+                  </React.Fragment>
+                ) :null
               }
             </li>
+            
+            {
+                isAdmin ? (
+                  <React.Fragment>
+                    <li>
+                    <NavLink to={'/admin/dashboard'} className='dropdown-item' >Admin Dashboard</NavLink> 
+                    </li>
+                    <li>
+                    <NavLink to={'/admin/books/list'} className='dropdown-item' >Books</NavLink> 
+                    </li>
+                    <li>
+                    <NavLink to={'/admin/category/list'} className='dropdown-item' >Category</NavLink> 
+                    </li>
+                    <li>
+                    <NavLink to={'/admin/rented/list'} className='dropdown-item' >Rent</NavLink> 
+                    </li>
+                    <li>
+                    <NavLink to={'/admin/customers/list'} className='dropdown-item' >Customers</NavLink> 
+                    </li>
+                  </React.Fragment>
+                ):null
+              }
             <li>
-              <NavLink to={'/'} className='dropdown-item btn btn-danger' onClick={logoutHandler} >Logout</NavLink>
+              <NavLink to={'/login'} className='dropdown-item btn btn-danger' onClick={logoutHandler} >Logout</NavLink>
             </li>
           </ul>
         </li>

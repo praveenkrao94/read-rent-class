@@ -18,6 +18,7 @@ function useAuthApi() {
                 let res = await axios.get(`/api/v1/auth/token`)
                 console.log('token' , res.data)
                 setToken(res.data.authToken)
+                
                 let res1 = await axios.get(`/api/v1/auth/current/user`, {
                     headers:{
                         Authorization : res.data.authToken

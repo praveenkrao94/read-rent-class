@@ -20,6 +20,10 @@ import { GlobalContext } from './GlobalContext';
 import ProtectedRoute from './AuthGuard/ProtectedRoute';
 import Header from './components/Util/Header';
 import Footer from './components/Util/Footer';
+import Books from './components/Admin/screens/Books';
+import Category from './components/Admin/screens/Category';
+import Rent from './components/Admin/screens/Rent';
+import Customer from './components/Admin/screens/Customers';
 
 
 
@@ -50,6 +54,12 @@ const[isAdmin] = context.auth.isAdmin
 
   <Route element = {<ProtectedRoute/>} >
     <Route path={'/admin/dashboard'} element = {<AdminDashboard/>}/>
+    
+    <Route path={'/admin/books/list'} element = {<Books/>}/>
+    <Route path={'/admin/category/list'} element = {<Category/>}/>
+    <Route path={'/admin/rented/list'} element = {<Rent/>}/>
+    
+    <Route path={'/admin/customers/list'} element = {<Customer/>}/>
   </Route>
 ):null
 },
