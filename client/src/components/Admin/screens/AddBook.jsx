@@ -1,14 +1,18 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import toast from 'react-toastify'
+
 import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../../../GlobalContext'
 import axios from 'axios'
+import {toast} from 'react-toastify'
+
+
 
 function AddBook() {
 
     const context= useContext(GlobalContext)
     const [token] = context.auth.token
 
+    const navigate = useNavigate()
     
 const[book,setBook]= useState({
     
@@ -52,11 +56,21 @@ const readvalue = (e)=>{
 const submitHandler = async (e)=>{
                 e.preventDefault()
                 try{
-                    console.log('new book' , book)
+                await axios.post('/api/book/create',book,{
+                    headers:{
+                        Authorization:token
+                    }
+                })
+                .then((res)=>{
+                   toast.success(res.data.msg)
+                    navigate('/admin/books/list')
+                }).catch(err => {
+                    console.log('Error in post api for book ')
+                })
                 }   
-                catch (err){
-                console.log(err)
-                }
+                catch (err) {
+                    console.log(err);
+                  }
 }
 
   return (
@@ -90,7 +104,7 @@ const submitHandler = async (e)=>{
                         <div className="form-group mt-2">
                             <label htmlFor="category">Category</label>
                             <select name="category" id="category" className='form-select' 
-                            >
+                             value={book.category} onChange={readvalue} >
                                 <option value='null'>Choose Category</option>
                                 {
                                     category && category.map((item,index)=>{
