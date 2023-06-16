@@ -27,6 +27,8 @@ import Customer from './components/Admin/screens/Customers';
 import AddBook from './components/Admin/screens/AddBook';
 import UpdateBook from './components/Admin/screens/UpdateBook';
 import BookDetails from './components/Admin/screens/BookDetails';
+import AddCategory from './components/Admin/screens/category/AddCategory';
+import UpdateCategory from './components/Admin/screens/category/UpdateCategory';
 
 
 
@@ -65,6 +67,10 @@ const[isAdmin] = context.auth.isAdmin
     <Route path={'/admin/book/details/:id'} element = {<BookDetails/>}/>
   
     <Route path={'/admin/category/list'} element = {<Category/>}/>
+    <Route path={'/admin/category/add'} element = {<AddCategory/>}/>
+    <Route path={'/admin/category/edit/:id'} element = {<UpdateCategory/>}/>
+
+
     <Route path={'/admin/rented/list'} element = {<Rent/>}/>
     
     <Route path={'/admin/customers/list'} element = {<Customer/>}/>

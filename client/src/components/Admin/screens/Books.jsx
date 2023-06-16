@@ -2,6 +2,7 @@ import React, { useEffect  ,useState, useContext} from 'react'
 import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import { GlobalContext } from '../../../GlobalContext'
+import {toast} from 'react-toastify'
 
 function Books() {
     const context = useContext(GlobalContext)
@@ -21,7 +22,20 @@ const readBooks = async ()=>{
         readBooks()
     },[])
 
-
+const deleteHandler = async(id)=>{
+    if(window.confirm('Are You Sure to Delete this Book')){
+        await axios.delete(`/api/book/delete/${id}`,{
+            headers:{
+                Authorization:token
+            }
+        }).then(res=>{
+                toast.success(res.data.msg)
+                window.location.reload()
+        }).catch(err =>{
+                toast.error(err.response.data.msg)
+        })
+    }
+}
     if(books.length === 0){
             return(
                 <div className="container-fluid">
@@ -77,7 +91,7 @@ const readBooks = async ()=>{
                                                 <td>
                                                     <NavLink to={`/admin/book/edit/${_id}`} className='btn btn-link' >Edit</NavLink>
                                                     <NavLink to={`/admin/book/details/${_id}`} className='btn btn-link' >Details</NavLink>
-                                                    <button className='btn btn-link'>Delete</button>
+                                                    <button className='btn btn-link' onClick={()=> deleteHandler(_id)}>Delete</button>
                                                 </td>
                                             </tr>
                                         )
