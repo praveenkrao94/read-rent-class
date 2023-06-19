@@ -17,7 +17,7 @@ amount:{
 },
 rentdate:{
     type:Date,
-    default: new Date().toLocaleString()
+    default: new Date().toString()
 },
 returndate:{
     type:Date,
@@ -27,6 +27,14 @@ paymentStatus:{
     type:String,
     enum:["paid", "unpaid"],
     default:"unpaid"
+},
+book:{
+    type:Object,
+    default:{}
+},
+user:{
+    type:Object,
+    default:{}
 }
 },{
     collection :"rent",

@@ -6,11 +6,11 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const adminAuth = require('../middleware/adminAuth')
 
-rentRouter.get('/all' ,rentCtrl.getAll)
-rentRouter.get('/single/:id' ,rentCtrl.getSingle)
-rentRouter.post('/create' ,rentCtrl.create)
-rentRouter.patch('/update/:id' ,rentCtrl.update)
-rentRouter.delete('/delete/:id' ,rentCtrl.delete)
+rentRouter.get('/all' ,authMiddleware,adminAuth,rentCtrl.getAll)
+rentRouter.get('/single/:id' ,authMiddleware,adminAuth,rentCtrl.getSingle)
+rentRouter.post('/create',authMiddleware,adminAuth ,rentCtrl.create)
+rentRouter.patch('/update/:id',authMiddleware,adminAuth ,rentCtrl.update)
+rentRouter.delete('/delete/:id',authMiddleware,adminAuth ,rentCtrl.delete)
 
 module.exports = rentRouter
 

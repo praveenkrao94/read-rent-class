@@ -24,11 +24,14 @@ import Books from './components/Admin/screens/Books';
 import Category from './components/Admin/screens/Category';
 import Rent from './components/Admin/screens/Rent';
 import Customer from './components/Admin/screens/Customers';
-import AddBook from './components/Admin/screens/AddBook';
-import UpdateBook from './components/Admin/screens/UpdateBook';
-import BookDetails from './components/Admin/screens/BookDetails';
+import AddBook from './components/Admin/screens/book/AddBook';
+import UpdateBook from './components/Admin/screens/book/UpdateBook';
+import BookDetails from './components/Admin/screens/book/BookDetails';
 import AddCategory from './components/Admin/screens/category/AddCategory';
 import UpdateCategory from './components/Admin/screens/category/UpdateCategory';
+import Add from './components/Admin/screens/rented/Add';
+import UpdateRent from './components/Admin/screens/rented/UpdateRent';
+import DetailsRent from './components/Admin/screens/rented/DetailsRent';
 
 
 
@@ -72,6 +75,12 @@ const[isAdmin] = context.auth.isAdmin
 
 
     <Route path={'/admin/rented/list'} element = {<Rent/>}/>
+    <Route path={'/admin/rented/add'} element = {<Add/>}/>
+    <Route path={'/admin/rented/edit/:id'} element = {<UpdateRent/>}/>
+    <Route path={'/admin/rented/details/:id'} element = {<DetailsRent/>}/>
+   
+   
+    
     
     <Route path={'/admin/customers/list'} element = {<Customer/>}/>
   </Route>

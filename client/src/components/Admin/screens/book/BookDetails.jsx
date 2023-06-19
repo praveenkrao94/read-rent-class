@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {toast} from 'react-toastify'
-import { GlobalContext } from '../../../GlobalContext'
+import { GlobalContext } from '../../../../GlobalContext'
 
 function BookDetails() {
 

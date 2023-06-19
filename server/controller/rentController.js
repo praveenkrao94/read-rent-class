@@ -1,4 +1,6 @@
 const rent = require('../model/rentModel')
+const User = require('../model/userModel')
+const Book = require('../model/bookModel')
 
 const rentCtrl = {
 
@@ -30,7 +32,26 @@ const rentCtrl = {
             const extrent = await rent.findOne({userId:req.body.userId}&&{bookId : req.body.bookId})
             if(extrent)
                 return res.json({msg:"you already have this book rented"})
-            const newrent = await rent.create(req.body)
+
+                //rad book info
+
+                    const book = await Book.findById({_id:req.body.bookId})
+                    if(!book)
+                    return res.status(400).json({msg: 'Book details not found'})
+
+                    //rad user info
+                    const user = await User.findById({_id:req.body.userId})
+                    if(!user)
+                    return res.status(400).json({msg: 'user details not found'})
+
+                    
+                    let newRent = {
+                        ...req.body,
+                        user,
+                        book
+                    }
+
+            const newrent = await rent.create(newRent)
             return res.json({msg: "your new rent is been added" , rent:newrent})
         }
         catch (err){
@@ -47,6 +68,7 @@ const rentCtrl = {
 
             if(extrent.bookId === req.body.bookId && extrent.userId === req.body.userId)
             return res.json({msg:"You Already rented this booked"})
+
 
             const updateRent = await rent.findByIdAndUpdate({_id:id}, {
                 amount:req.body.amount,
