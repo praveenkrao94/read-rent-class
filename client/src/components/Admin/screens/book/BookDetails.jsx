@@ -71,6 +71,10 @@ const res = await axios.get(`/api/book/single/${params.id}`,{
                                 <span className="float-end text-success">{book.numberofCopy}</span>
                             </li>
                             <li className="list-group-item">
+                                <strong>Number of Copies</strong>
+                                <span className="float-end text-success">{book.rentedCopies}</span>
+                            </li>
+                            <li className="list-group-item">
                                 <strong>ISBN</strong>
                                 <span className="float-end text-success">{book.isbn}</span>
                             </li>

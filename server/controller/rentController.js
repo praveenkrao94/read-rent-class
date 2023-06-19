@@ -43,7 +43,12 @@ const rentCtrl = {
                     const user = await User.findById({_id:req.body.userId})
                     if(!user)
                     return res.status(400).json({msg: 'user details not found'})
+                    
+                    //update no fo copies and rented copies
 
+                    if(book.numberofCopy === 0){
+                        return res.json({msg:"Sorry Currently This book is sold Out"})
+                    }
                     
                     let newRent = {
                         ...req.body,

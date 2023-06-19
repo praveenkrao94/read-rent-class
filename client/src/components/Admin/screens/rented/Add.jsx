@@ -23,12 +23,16 @@ const diffDays  = (d1,d2) => {
 
 
 function Add() {
+
+    const navigate = useNavigate()
     const [rent,setRent] = useState({
         bookId: '',
-        amount: 0,
+        
         returnDate: '',
         paymentStatus: ''
     })
+
+    const [amount ,setAmount] = useState(0)
 
     const [books,setBooks] = useState([])
     const context = useContext(GlobalContext)
@@ -47,7 +51,7 @@ function Add() {
             console.log('selected book =', book)
             let totalAmount = days * book.rentCost
                 console.log('totalAmount =', totalAmount)
-            setRent({...rent, ["amount"]: totalAmount })
+            setAmount(totalAmount)
         }
 
         setRent({...rent , [name]: value })
@@ -66,21 +70,54 @@ function Add() {
 
     useEffect(() => {
         readBooks()
+       
     },[])
+
+    //update book info// 
+
+    const updateBookInfo = async (id)=>{
+        let book = books.find(item => item._id === id)
+        console.log(book ,'books')
+        if(book.numberOfCopy=== 0){
+            toast.warning("Sorry not available to rent ")
+        }else{
+            book.numberOfCopy = book.numberOfCopy - 1;
+            book.rentedCopies = book.rentedCopies + 1;
+
+            await axios.patch(`/api/book/update/${id}`, book ,{
+                headers:{
+                    Authorization:token
+                }
+            })
+    }
+}
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
             let newRent = {
                 ...rent,
-                userId: currentUser._id, 
+                userId: currentUser._id,
+                amount
             }
             console.log('newRet =', newRent)
+            updateBookInfo(rent.bookId)
+            await axios.post(`/api/rent/create` ,newRent,{
+                headers: {
+                    Authorization:token
+                }
+            }).then(res => {
+                toast.success('New Book Rented Successfully')
+                navigate(`/admin/rented/list`)
+            }).catch(err => toast.error(err.response.data.msg))
         } catch (err) {
             toast.error(err.msg)
         }
     }
 
+
+    
   return (
     <div className='container'>
         <div className="row">
@@ -110,14 +147,22 @@ function Add() {
                             </div>
                             <div className="form-group mt-2">
                                 <label htmlFor="amount">Amount</label>
-                                <input type="number" name="amount" value={rent.amount} onChange={readValue} id="amount" className="form-control" required />
+                                <input type="number" name="amount" value={amount} onChange={(e)=> setAmount(e.target.value)} id="amount" className="form-control" required />
                             </div>
                             <div className="form-group mt-2">
                                 <label htmlFor="returnDate">Return Date</label>
                                 <input type="datetime-local" name="returnDate" value={rent.returnDate} onChange={readValue} id="returnDate" className="form-control" />
                             </div>
-                            <div className="form-group mt-2"></div>
-                            <div className="form-group mt-2"></div>
+                            <div className="form-group mt-2">
+                                <label htmlFor="paymentStatus">Payment Status</label>
+                                <select name="paymentStatus" id="paymentStatus" className='form-select' value={rent.paymentStatus} onChange={readValue}>
+                                    <option value="unpaid">Un-Paid</option>
+                                    <option value="paid">Paid</option>
+                                </select>
+                            </div>
+                            <div className="form-group mt-4 mb-1" >
+                                <input type="submit" className='btn btn-outline-success' value="Rent Book"/>
+                            </div>
                         </form>
                     </div>
                 </div>
