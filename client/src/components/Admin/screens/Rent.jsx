@@ -66,7 +66,7 @@ function Rent() {
                                 <td>{returndate}</td>
                                 <td>{paymentStatus}</td>
                                 <td>
-                                  <NavLink to={`/admin/rented/edit/${_id}`} className="btn btn-link">Details</NavLink>
+                                  <NavLink to={`/admin/rented/edit/${_id}`} className="btn btn-link">Edit</NavLink>
                                   <NavLink to={`/admin/rented/details/${_id}`} className="btn btn-link">Details</NavLink>
                                   <button className='btn btn-link'>Delete</button>
                                 </td>

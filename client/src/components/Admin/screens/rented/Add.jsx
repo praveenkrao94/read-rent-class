@@ -26,13 +26,15 @@ function Add() {
 
     const navigate = useNavigate()
     const [rent,setRent] = useState({
+        userId:'',
         bookId: '',
-        
-        returnDate: '',
+        returndate: '',
         paymentStatus: ''
     })
 
     const [amount ,setAmount] = useState(0)
+
+    const [users,setUsers] = useState([])
 
     const [books,setBooks] = useState([])
     const context = useContext(GlobalContext)
@@ -42,7 +44,7 @@ function Add() {
     const readValue = (e) => {
         const { name, value } = e.target;
         
-        if(name === "returnDate") {
+        if(name === "returndate") {
             let today = new Date();
             let retDate = new Date(value);
             let days = Math.abs(diffDays(today,retDate))
@@ -68,8 +70,21 @@ function Add() {
         getBooks()
     },[])
 
+
+    const readUsers =  useCallback(() => {
+        let getUsers = async () => {
+            const res = await axios.get(`/api/v1/auth/all/users`, {
+                headers: { Authorization: token }
+            })
+            setUsers(res.data.users)
+        }
+
+        getUsers()
+    },[])
+
     useEffect(() => {
         readBooks()
+        readUsers()
        
     },[])
 
@@ -146,12 +161,28 @@ function Add() {
                                 </select>
                             </div>
                             <div className="form-group mt-2">
+                                <label htmlFor="userId">UserId</label>
+                                <select name="userId" id="userId" className="form-select" value={rent.userId} onChange={readValue} >
+                                    <option value="">Choose User</option>
+                                    {
+                                        users && users.map((item,index) => {
+                                            const { _id, name } = item
+                                            return (
+                                                <option value={_id} key={index}>
+                                                    { name }
+                                                </option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div className="form-group mt-2">
                                 <label htmlFor="amount">Amount</label>
                                 <input type="number" name="amount" value={amount} onChange={(e)=> setAmount(e.target.value)} id="amount" className="form-control" required />
                             </div>
                             <div className="form-group mt-2">
-                                <label htmlFor="returnDate">Return Date</label>
-                                <input type="datetime-local" name="returnDate" value={rent.returnDate} onChange={readValue} id="returnDate" className="form-control" />
+                                <label htmlFor="returndate">Return Date</label>
+                                <input type="datetime-local" name="returndate" value={rent.returndate} onChange={readValue} id="returndate" className="form-control" />
                             </div>
                             <div className="form-group mt-2">
                                 <label htmlFor="paymentStatus">Payment Status</label>
